@@ -1,3 +1,5 @@
+delay_after_build 3000
+delay_after_run 3000
 input D:/raylib_test/src/main.cpp
 output D:/raylib_test/raylib.exe
 includes D:/raylib_test/src/include/raylib/
