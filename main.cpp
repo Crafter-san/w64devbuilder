@@ -40,6 +40,7 @@ std::char string_to_char(std::string str) {
 	}
 	return char_str;
 }*/
+std::string base_command = "g++ ";
 std::string input_files = "";
 std::string libs = "";
 std::string libraries = "";
@@ -60,9 +61,9 @@ void process_cmd(std::vector<std::string> command) {
 	else if (command[0] == "input") input_files += command[1] + " ";
 	else if (command[0] == "delay_after_build") build_delay = std::stoi(command[1]);
 	else if (command[0] == "delay_after_run") run_delay = std::stoi(command[1]);
-}
+	else if (command[0] == "base_build") base_command = command[1] + " ";
+};
 int main(int argc, char* argv[]) {
-	std::string command = "g++ ";
 	_PROCESS_INFORMATION processInformation;
 	BOOL creationResult;
 	std::vector<std::string> lines;
@@ -73,17 +74,17 @@ int main(int argc, char* argv[]) {
 		std::vector<std::string> line = customSplit(lines[i], SPACE);
 		process_cmd(line);
 	}
-	command += input_files + libraries + includes + libs + output_file + compress;
+	base_command += input_files + libraries + includes + libs + output_file + compress;
 	//const char * com = command.c_str();
 	//char test[] = { com };
-	std::cout << std::endl << command << std::endl;
+	std::cout << std::endl << base_command << std::endl;
 	STARTUPINFO siStartInfo = {};
 	siStartInfo.cb = sizeof(STARTUPINFO);
 	siStartInfo.hStdError = GetStdHandle(STD_OUTPUT_HANDLE);
 	siStartInfo.hStdOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 	siStartInfo.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
 	siStartInfo.dwFlags |= STARTF_USESTDHANDLES;
-	creationResult = CreateProcessA(NULL, command.data(), NULL, NULL, true, 0, NULL, NULL, &siStartInfo, &processInformation);
+	creationResult = CreateProcessA(NULL, base_command.data(), NULL, NULL, true, 0, NULL, NULL, &siStartInfo, &processInformation);
 	Sleep(build_delay);
 	creationResult = CreateProcessA(NULL, output.data(), NULL, NULL, true, 0, NULL, NULL, &siStartInfo, &processInformation);
 	std::cout << creationResult;
