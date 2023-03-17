@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <vector>
 #include <fstream>
+#include <string>
 #include <cstring>
 std::vector<std::string> customSplit(std::string str, char separator) {
 	std::vector<std::string> strings;
@@ -46,6 +47,8 @@ std::string includes = "";
 std::string output_file = "-o a.out ";
 std::string compress = "-Os -s";
 std::string output = "a.out";
+int build_delay = 10000;
+int run_delay = 10000;
 void process_cmd(std::vector<std::string> command) {
 	if (command[0] == "output") {
 		output_file = "-o " + command[1] + " ";
@@ -55,6 +58,8 @@ void process_cmd(std::vector<std::string> command) {
 	else if (command[0] == "libraries") libraries += "-L" + command[1] + " ";
 	else if (command[0] == "includes") includes += "-I" + command[1] + " ";
 	else if (command[0] == "input") input_files += command[1] + " ";
+	else if (command[0] == "delay_after_build") build_delay = std::stoi(command[1]);
+	else if (command[0] == "delay_after_run") run_delay = std::stoi(command[1]);
 }
 int main(int argc, char* argv[]) {
 	std::string command = "g++ ";
@@ -79,9 +84,9 @@ int main(int argc, char* argv[]) {
 	siStartInfo.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
 	siStartInfo.dwFlags |= STARTF_USESTDHANDLES;
 	creationResult = CreateProcessA(NULL, command.data(), NULL, NULL, true, 0, NULL, NULL, &siStartInfo, &processInformation);
-	Sleep(10000);
+	Sleep(build_delay);
 	creationResult = CreateProcessA(NULL, output.data(), NULL, NULL, true, 0, NULL, NULL, &siStartInfo, &processInformation);
 	std::cout << creationResult;
-	Sleep(10000);
+	Sleep(run_delay);
 	return 0;
 };
