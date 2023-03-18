@@ -8,4 +8,4 @@ TODO:
 
 * Add custom text editor.
 * Add more complex commands.
-* Add ability to push and pull from github.
+* Add ability to push and pull from Github automatically and manually.
