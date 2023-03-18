@@ -9,4 +9,4 @@ TODO:
 * Add custom text editor.
 * Add more complex commands.
 * Add ability to push and pull from Github automatically and manually.
-* Make it usable without w64devkit (Maybe), or make my own devkit
+* Make it usable without w64devkit (Maybe), or make something similar
