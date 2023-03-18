@@ -7,5 +7,5 @@ Build helper for w64devkit and possibly plain mingw, and possibly other mediums.
 TODO:
 
 - [ ] Add custom text editor.
-- [ ] Add more complex commands.
+- [ ] Add more commands (Open to suggestions!).
 - [ ] Add ability to push and pull from Github automatically and manually.
