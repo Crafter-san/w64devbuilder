@@ -85,9 +85,11 @@ int main(int argc, char* argv[]) {
 	siStartInfo.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
 	siStartInfo.dwFlags |= STARTF_USESTDHANDLES;
 	creationResult = CreateProcessA(NULL, base_command.data(), NULL, NULL, true, 0, NULL, NULL, &siStartInfo, &processInformation);
+	WaitForSingleObject(processInformation.hProcess, INFINITE);
 	Sleep(build_delay);
+	
 	creationResult = CreateProcessA(NULL, output.data(), NULL, NULL, true, 0, NULL, NULL, &siStartInfo, &processInformation);
-	std::cout << creationResult;
+	WaitForSingleObject(processInformation.hProcess, INFINITE);
 	Sleep(run_delay);
 	return 0;
 };
