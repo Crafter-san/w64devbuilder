@@ -1,37 +1,6 @@
 #include "raylib.h"
 #include <iostream>
-struct TwoPoint {
-    int xa = 0;
-    int ya = 0;
-    int xb = 0;
-    int yb = 0;
-    Color color = {
-        .r = 0,
-        .g = 0,
-        .b = 0,
-        .a = 255
-    };
-    void rect(Color col) {
-        DrawRectangle(xa, ya, xb, yb, col);
-    };
-    void rect() {
-        DrawRectangle(xa, ya, xb, yb, color);
-    };
-    void line(Color col) {
-        DrawLine(xa, ya, xb, yb, col);
-    };
-    void line() {
-        DrawLine(xa, ya, xb, yb, color);
-    };
-    void lRect(Color col) {
-        DrawRectangleLines(xa, ya, xb, yb, col);
-    };
-    void lRect() {
-        DrawRectangleLines(xa, ya, xb, yb, BLACK);
-    };
-    using execute_fp = void (*)();
-    execute_fp onclick;
-};
+#include "gui.hpp"
 int main(void)
 {
     // Initialization
@@ -41,24 +10,41 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "raylib [shapes] example - basic shapes drawing");
 
-    TwoPoint rect_a = {
+    Shape rect_a = {
         .xa = 200,
         .ya = 200,
-        .xb = 400,
-        .yb = 400,
+        .width = 200,
+        .height = 200,
         .color = {
-            .r = 150,
+            .r = 200,
             .g = 0,
             .b = 20,
             .a = 255
         }
     };
 
-    TwoPoint title_line{
+    Shape title_line = {
         .xa = 18,
         .ya = 42,
         .xb = screenWidth - 18,
         .yb = 42
+    };
+    Shape circle = {
+        .xa = 300,
+        .ya = 300,
+        .radius = 100,
+        .color = {
+            .r = 200,
+            .g = 0,
+            .b = 20,
+            .a = 255
+        }
+    };
+    Shape middle_line = {
+        .xa = 300,
+        .ya = 300,
+        .xb = 400,
+        .yb = 400
     };
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -81,9 +67,11 @@ int main(void)
             ClearBackground(RAYWHITE);
 
             DrawText("Simple Game", 20, 20, 20, DARKGRAY);
-            rect_a.lRect();
-            rect_a.rect();
-            title_line.line();
+            DrawRectangle(100, 100, 200, 200, BLACK);
+            //rect_a.lRect(rect_a.color);
+            circle.ellipse(circle.color);
+            title_line.line(title_line.color);
+            middle_line.line(middle_line.color);
         EndDrawing();
         //----------------------------------------------------------------------------------
     }
