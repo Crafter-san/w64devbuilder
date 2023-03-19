@@ -41,12 +41,13 @@ std::char string_to_char(std::string str) {
 	return char_str;
 }*/
 std::string base_command = "g++ ";
+std::string version = "-std=c++20";
 std::string input_files = "";
 std::string libs = "";
 std::string libraries = "";
 std::string includes = "";
 std::string output_file = "-o a.out ";
-std::string compress = "-Os -s";
+std::string compress = "-Os -s ";
 std::string output = "a.out";
 int build_delay = 10000;
 int run_delay = 10000;
@@ -61,7 +62,10 @@ void process_cmd(std::vector<std::string> command) {
 	else if (command[0] == "input") input_files += command[1] + " ";
 	else if (command[0] == "delay_after_build") build_delay = std::stoi(command[1]);
 	else if (command[0] == "delay_after_run") run_delay = std::stoi(command[1]);
-	else if (command[0] == "base_build") base_command = command[1] + " ";
+	else if (command[0] == "base_build") {
+		base_command = command[1] + " ";
+		if (command.size() > 2) version = "-std=" + command[2] + " ";
+	}
 };
 int main(int argc, char* argv[]) {
 	_PROCESS_INFORMATION processInformation;
@@ -74,7 +78,7 @@ int main(int argc, char* argv[]) {
 		std::vector<std::string> line = customSplit(lines[i], SPACE);
 		process_cmd(line);
 	}
-	base_command += input_files + libraries + includes + libs + output_file + compress;
+	base_command += input_files + libraries + includes + libs + output_file + compress + version;
 	//const char * com = command.c_str();
 	//char test[] = { com };
 	std::cout << std::endl << base_command << std::endl;
